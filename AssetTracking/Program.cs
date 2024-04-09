@@ -1,10 +1,12 @@
-﻿using AssetTracking;
+﻿﻿using AssetTracking;
 
+// Initialize AssetManager and add sample data
 AssetManager assetManager = new AssetManager();
 assetManager.AddSampleData();
 
 bool exit = false;
 
+// Main loop for user interaction
 while (!exit)
 {
     ShowMainMenu();
@@ -29,6 +31,7 @@ while (!exit)
     }
 }
 
+// Method to display the main menu options
 static void ShowMainMenu()
 {
     Console.ForegroundColor = ConsoleColor.Blue;

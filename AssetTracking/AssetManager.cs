@@ -11,6 +11,7 @@ namespace AssetTracking
     {
         private List<Asset> assets = new List<Asset>();
 
+        // Method to add sample data
         public void AddSampleData()
         {
             assets.Add(new Phone("Apple", "iPhone 12", new DateOnly(2021, 10, 13), 970, new Office("Sweden", "SEK")));
@@ -18,6 +19,7 @@ namespace AssetTracking
             assets.Add(new Computer("Apple", "MacBook Pro", new DateOnly(2021, 10, 10), 1480, new Office("Spain", "EUR")));
             assets.Add(new Computer("Asus", "ZenBook", new DateOnly(2021, 7, 10), 1200, new Office("USA", "USD")));
         }
+        // Method to add a new asset
         public void AddAsset()
         {
             string type = GetType();
@@ -33,6 +35,7 @@ namespace AssetTracking
             DisplaySuccessMessage("Successfully added asset!");
         }
 
+        // Method to get type input from the user
         private static string GetType()
         {
             Console.WriteLine("Select a Type: ");
@@ -51,6 +54,7 @@ namespace AssetTracking
             }
         }
 
+        // Method to get asset brand input from the user
         private static string GetBrand()
         {
             try
@@ -67,6 +71,7 @@ namespace AssetTracking
             }
         }
 
+        // Method to get asset model input from the user
         private static string GetModel()
         {
             try
@@ -83,6 +88,7 @@ namespace AssetTracking
             }
         }
 
+        // Method to get asset office input from the user
         private static Office GetOffice()
         {
             Console.WriteLine("Select an Office: ");
@@ -104,6 +110,7 @@ namespace AssetTracking
             }
         }
 
+        // Method to get asset purchase date input from the user
         private static DateOnly GetPurchaseDate()
         {
             try
@@ -120,6 +127,7 @@ namespace AssetTracking
             }
         }
 
+        // Method to get asset price input from the user
         private static int GetPrice()
         {
             try
@@ -135,6 +143,7 @@ namespace AssetTracking
             }
         }
 
+        // Method to create an asset based on input
         private static Asset CreateAsset(string type, string brand, string model, DateOnly purchaseDate, double price, Office office)
         {
             return type == "Phone" ?
@@ -142,6 +151,7 @@ namespace AssetTracking
                    new Computer(brand, model, purchaseDate, price, office);
         }
 
+        // Method to display success message
         private static void DisplaySuccessMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -149,6 +159,7 @@ namespace AssetTracking
             Console.ResetColor();
         }
 
+        // Method to display error message
         public static void DisplayErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -156,12 +167,14 @@ namespace AssetTracking
             Console.ResetColor();
         }
 
+        // Method to list assets
         public void ListAssets()
         {
             DisplayHeader();
-            DisplayAssets();
+            DisplaySortedAssets();
         }
 
+        // Method to display header of asset list
         private static void DisplayHeader()
         {
             string[] headers = { "Type", "Brand", "Model", "Office", "Purchase Date", "Price in USD", "Currency", "Local price today" };
@@ -179,7 +192,8 @@ namespace AssetTracking
             Console.WriteLine();
         }
 
-        private void DisplayAssets()
+        // Method to display sorted assets
+        private void DisplaySortedAssets()
         {
             List<Asset> sortedList = SortAssets();
             foreach (Asset item in sortedList)
@@ -188,11 +202,13 @@ namespace AssetTracking
             }
         }
 
+        // Method to sort assets by office and then by purchase date
         private List<Asset> SortAssets()
         {
             return assets = [.. assets.OrderBy(asset => asset.Office.Country).ThenBy(asset => asset.PurchaseDate)];
         }
 
+        // Method to display a single asset
         private static void DisplayAsset(Asset item)
         {
             double localPriceToday = GetLocalPriceToday(item);
@@ -211,6 +227,8 @@ namespace AssetTracking
 
             Console.ResetColor();
         }
+
+        // Method to calculate local price today based on currency
         private static double GetLocalPriceToday(Asset item)
         {
             double usdToSek = 10.635816;
@@ -229,11 +247,14 @@ namespace AssetTracking
                 return item.Price;
             }
         }
+
+        // Method to format the price
         private static string FormatPrice(double price)
         {
             return Math.Abs(price % 1) > 0 ? price.ToString("0.00") : price.ToString();
         }
 
+        // Method to highlight an asset based on purchase date
         private static void HighlightAssetBasedOnPurchaseDate(Asset item)
         {
             DateOnly today = DateOnly.FromDateTime(DateTime.Now);
